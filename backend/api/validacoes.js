@@ -8,7 +8,7 @@ module.exports = app => {
     
     function naoExisteOuErro(value, msg){ // se existir ele da erro se não da msg 
         try {
-            ExisteOuErro(value, msg)
+            existeOuErro(value, msg)
         } catch (msg) {
             return
         }
