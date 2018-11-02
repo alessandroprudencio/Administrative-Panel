@@ -1,4 +1,9 @@
 module.exports = app =>{
+
+    app.post('/cadastrar', app.api.user.save)
+    app.post('/auth',app.api.auth.signin)
+    app.post('/validaToken',app.api.auth.validaToken) 
+
     app.route('/users')
         .post(app.api.user.save)
         .get(app.api.user.get)
