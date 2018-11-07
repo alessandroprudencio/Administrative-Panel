@@ -37,6 +37,7 @@ module.exports = app => {
                 app.db('users')
                     .update(usuario)
                     .where({id:usuario.id})
+                    .whereNull('selectedAt')
                     .then(_=> res.status(204).json(usuario))
                     .catch(err => res.status(500).send(err))
             }else{
@@ -50,6 +51,7 @@ module.exports = app => {
     const get = (req, res) => {
         app.db('users')
         .select('id','name','email', 'admin')
+        .whereNull('selectedAt')
         .then(usuario => res.json(usuario))
         .catch(err => res.status(500).send(err))
     }
@@ -58,11 +60,30 @@ module.exports = app => {
         app.db('users')
         .select('id','name','email', 'admin')
         .where({id:req.params.id})
+        .whereNull('selectedAt')
         .first()
         .then(usuario => res.json(usuario))
         .catch(err => res.status(500).send(err))
     }
 
+    //função que atualiza a coluna deleted_ad 
+    const remove = async (req,res) =>{
+            try {
+                const artigos = await app.db('articles')
+                .where({id:req.params.id})
+                naoExisteOuErro(artigos, "Usuario tem um artigo publicado")
 
-    return { save, get, getById }
+                const atualizaDelete_ad= await app.db('users')
+                .update({deletedAt: new Date()})
+                .where({id:req.params.id})
+                existeOuErro(atualizaDelete_ad, "Usúario não encontrado")
+
+                res.status(201).send()
+
+            } catch (error) {
+                res.status(400).send(error)
+            }
+    }
+
+    return { save, get, getById, remove }
 }

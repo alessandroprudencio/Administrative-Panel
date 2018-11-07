@@ -1,4 +1,4 @@
-const { chaveSecreta } = require('../.env')
+const { authSecret } = require('../.env')
 const jwt = require('jwt-simple')
 const bcrypt = require('bcrypt-nodejs')
 
@@ -18,13 +18,17 @@ module.exports = app =>{
 
         const DataAtual = Math.floor(Date.now()/1000) //pega o valor em segundos
 
-        const dadosToken = {
+        const payload = {
+            id: user.id,
+            name: user.name,
+            email:user.email,
+            admin:user.admin,
             iat : DataAtual,
             exp : DataAtual + (60 * 60)
         }
         res.json({
-            ...dadosToken, 
-            token : jwt.encode(dadosToken, chaveSecreta) 
+            ...payload, 
+            token : jwt.encode(payload, authSecret) 
         })
     }
 
@@ -32,7 +36,7 @@ module.exports = app =>{
             const userData =  req.body || null
                try {
                    if(userData){
-                       const token = jwt.decode(userData.token, chaveSecreta)
+                       const token = jwt.decode(userData.token, authSecret)
                        if(new Date(token.exp * 1000) > new Date()){
                             return res.send(true) //token            valido
                        }

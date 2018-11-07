@@ -1,3 +1,6 @@
+const admin = require('../config/admin')
+
+
 module.exports = app =>{
 
     app.post('/cadastrar', app.api.user.save)
@@ -5,34 +8,46 @@ module.exports = app =>{
     app.post('/validaToken',app.api.auth.validaToken) 
 
     app.route('/users')
-        .post(app.api.user.save)
-        .get(app.api.user.get)
+        .all(app.config.passport.autenticacao())
+        .post(admin(app.api.user.save))
+        .get(admin(app.api.user.get))
 
     app.route('/users/:id')
-        .put(app.api.user.save)
-        .get(app.api.user.getById)
-    
+        .all(app.config.passport.autenticacao())
+        .put(admin(app.api.user.save))
+        .get(admin(app.api.user.getById))
+        .delete(admin(app.api.user.remove))
+
     app.route('/categoria')
-        .post(app.api.categorias.save)
-        .get(app.api.categorias.get)
+        .all(app.config.passport.autenticacao())
+        .post(admin(app.api.categorias.save))
+        .get(admin(app.api.categorias.get))
 
     app.route('/categoria/tree')
+        .all(app.config.passport.autenticacao())
         .get(app.api.categorias.getTree)
 
     app.route('/categoria/:id')
+        .all(app.config.passport.autenticacao())
         .get(app.api.categorias.getById)
-        .put(app.api.categorias.save)
-        .delete(app.api.categorias.remove)
+        .put(admin(app.api.categorias.save))
+        .delete(admin(app.api.categorias.remove))
 
     app.route('/artigo/')
-        .get(app.api.artigos.get)
-        .post(app.api.artigos.save)
+        .all(app.config.passport.autenticacao())
+        .get(admin(app.api.artigos.get))
+        .post(admin(app.api.artigos.save))
 
     app.route('/artigo/:id')
+        .all(app.config.passport.autenticacao())
         .get(app.api.artigos.getById)
-        .put(app.api.artigos.save)
-        .delete(app.api.artigos.remove)
+        .put(admin(app.api.artigos.save))
+        .delete(admin(app.api.artigos.remove))
 
     app.route('/categorias/:id/artigos') //pega o artigo da categoria tal
+        .all(app.config.passport.autenticacao())
         .get(app.api.artigos.getByCategoria)
+
+    app.route('/stats')
+     .get(app.api.estatistica.get)
 }
