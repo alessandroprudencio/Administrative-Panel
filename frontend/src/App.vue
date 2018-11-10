@@ -1,6 +1,9 @@
 <template>
 	<div id="app" :class="{'hide-menu':!isMenuVisible}"> <!-- SE NÃO ESTIVER VISIVEL APLICA O CSS-->
-		<Header title="Alessandro - ADM de artigos" :escondeToogle="false"/>
+		<Header title="Alessandro - ADM de artigos" 
+		:escondeToogle="false"
+		:escondeUserDropDown="true"
+		/>
 		<Menu/>
 		<Content/>
 		<Footer/>

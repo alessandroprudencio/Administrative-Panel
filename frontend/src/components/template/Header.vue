@@ -7,15 +7,21 @@
 
         <h1 class="title">{{title}}</h1>
 
+        <UserDropDown v-if="!escondeDropDown"/>
+
     </header>
 </template>
 
 <script>
+import UserDropDown from './UserDropDown'
 export default {
     name:"Header",
+    components:{UserDropDown},
+
     props:{
         title:String,
-        escondeToogle: Boolean
+        escondeToogle: Boolean,
+        escondeDropDown:Boolean
     },
     computed:{
         icon(){
@@ -45,11 +51,13 @@ export default {
         color: black;
         font-weight: 100;
         flex-grow: 1;
-        text-align: center;
+        text-align: center; 
+        margin-top:0.5%;
     }
     .title a{
         color:#000;
         text-decoration: none;
+        
     }
     header.header > a.toggle {
         cursor: pointer;
