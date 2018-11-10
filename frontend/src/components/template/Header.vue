@@ -1,20 +1,71 @@
 <template>
-    <header class="header"></header>
+    <header class="header">
+
+        <a class="toggle" @click="escondeMenu" v-if="!escondeToogle">
+            <i class="fa fa-lg" :class="icon"></i>    
+        </a>
+
+        <h1 class="title">{{title}}</h1>
+
+    </header>
 </template>
 
 <script>
 export default {
-    name:"Header"
+    name:"Header",
+    props:{
+        title:String,
+        escondeToogle: Boolean
+    },
+    computed:{
+        icon(){
+            return 'fa-angle-left'
+        }
+    },
+    methods:{
+        escondeMenu(){
+            this.$store.commit('toogleMenu')
+        }
+    }
 }
 </script>
 
 <style>
     .header{
         grid-area: header;
-        background: linear-gradient(to right, #1e469a, #49a7c1);
-
+        margin-left:0.10%; 
         display: flex;
         justify-content: center;
         align-items:center;
+        border-bottom: 1px solid #ccc;
     }
+
+    .title{
+        font-size: 1.1rem;
+        color: black;
+        font-weight: 100;
+        flex-grow: 1;
+        text-align: center;
+    }
+    .title a{
+        color:#000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    header.header > a.toggle {
+        width: 60px;
+        height: 100%;
+        color: #000;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    header.header > a.toggle:hover {
+        background-color: #e0dede;
+    }
+    .fa-lg{
+            margin-right: 5%;
+    }
+
 </style>

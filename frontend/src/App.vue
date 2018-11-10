@@ -1,6 +1,6 @@
 <template>
-	<div id="app">
-		<Header/>
+	<div id="app" :class="{'hide-menu':!isMenuVisible}"> <!-- SE NÃO ESTIVER VISIVEL APLICA O CSS-->
+		<Header title="Alessandro - ADM de artigos" :escondeToogle="false"/>
 		<Menu/>
 		<Content/>
 		<Footer/>
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import  Header  from "@/components/template/Header";
 import  Content  from "@/components/template/Content";
 import  Footer  from "@/components/template/Footer";
@@ -15,13 +16,15 @@ import  Menu  from "@/components/template/Menu";
 
 export default {
 	name: "App",
-	components:{ Header, Content, Footer, Menu }
+	components:{ Header, Content, Footer, Menu },
+	computed: mapState(['isMenuVisible'])
 }
 </script>
 
 <style>
 	*{
-		font-family:'Lato','sans-serif ';
+		font-family:'Raleway','sans-serif ';
+		
 	}
 	body{
 		margin:0;
@@ -33,12 +36,19 @@ export default {
 		height: 100vh;
 
 		display: grid;
-		grid-template-rows: 60px 1fr 40px;
+		grid-template-rows: 50px 1fr 40px;
 		grid-template-columns:300px 1fr;
 
 		grid-template-areas: 
-		"header header"
+		"menu header"
 		"menu content"
 		"menu footer"
+	}
+	#app.hide-menu{
+		grid-template-areas: 
+			"header header"
+			"content content"
+			"footer footer"
+
 	}
 </style>

@@ -1,6 +1,6 @@
 <template>
     <footer class="footer">
-        <span> Alessandro Prudencio</span>
+        <span>© Alessandro Prudencio - 2018</span>
     </footer>
 </template>
 
@@ -13,11 +13,13 @@ export default {
 <style>
     .footer{
         grid-area: footer;
-        background-color: #DDD;
         color:#333;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         padding-right: 10px;
+        z-index:-1;
+        border-top: 1px solid #ccc;
+
     }
 </style>
