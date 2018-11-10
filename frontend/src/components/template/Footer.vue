@@ -20,6 +20,5 @@ export default {
         padding-right: 10px;
         z-index:-1;
         border-top: 1px solid #ccc;
-
     }
 </style>

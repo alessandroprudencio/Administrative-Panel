@@ -19,7 +19,7 @@ export default {
     },
     computed:{
         icon(){
-            return 'fa-angle-left'
+            return this.$store.state.isMenuVisible ? 'fa-angle-left' : 'fa-angle-down ' //se for verdadeito retorna 'fa-angle-left'
         }
     },
     methods:{
@@ -50,9 +50,9 @@ export default {
     .title a{
         color:#000;
         text-decoration: none;
-        cursor: pointer;
     }
     header.header > a.toggle {
+        cursor: pointer;
         width: 60px;
         height: 100%;
         color: #000;
@@ -65,6 +65,7 @@ export default {
         background-color: #e0dede;
     }
     .fa-lg{
+            font-size: 1.1rem;
             margin-right: 5%;
     }
 
