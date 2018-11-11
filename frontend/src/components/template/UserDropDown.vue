@@ -9,8 +9,8 @@
         </div>
 
         <div class="user-DropDown-Content">
-                <a href=""><i class="fa fa-cogs">Administração</i></a>
-                <a href=""><i class="fa fa-sign-out">Sair</i></a>
+                <router-link to="/admin"><i class="fa fa-cogs"><span>Administração</span></i></router-link>
+                <router-link to="/"><i class="fa fa-sign-out"><span>Sair</span></i></router-link>
 
         </div>
 
@@ -81,5 +81,8 @@ export default {
      .user-DropDown-Content a:hover{
          color: black;
          background-color: #E0DEDE;
+     }
+     .user-DropDown-Content span{
+		font-family:'Raleway','sans-serif ';
      }
 </style>
