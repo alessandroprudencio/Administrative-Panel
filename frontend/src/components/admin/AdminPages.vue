@@ -5,13 +5,13 @@
         <div class="admin-pages-tabs">
             <b-card no-body>
                 <b-tabs pills card>
-                    <b-tab title="Artigos" active>
+                    <b-tab title="Artigos">
                         <AdminArticle/>
                     </b-tab>
                     <b-tab title="Categorias">
                         <AdminCategory/>
                     </b-tab>
-                    <b-tab title="Usuários">
+                    <b-tab title="Usuários" active>
                         <AdminUser/>
                     </b-tab>
                 </b-tabs>
@@ -24,12 +24,12 @@
 import PageTitle from '../template/PageTitle'
 
 import AdminArticle from './AdminArticle'
-import AdminCategorie from './AdminCategory'
+import AdminCategory from './AdminCategory'
 import AdminUser from './AdminUser'
 
 export default {
     name:"AdminPages",
-    components:{PageTitle, AdminArticle, AdminCategorie, AdminUser}
+    components:{PageTitle, AdminArticle, AdminCategory, AdminUser}
 }
 </script>
 
