@@ -13,8 +13,8 @@ module.exports = app => {
             const usuario = { ...req.body }
             if(req.params.id) usuario.id =req.params.id
         
-            if(!req.originaUrl.startWith('/users')) user.admin = false //se na requisicao não tiver /users
-            if(!req.user || !req.admin.false) user.admin = false
+            if(!req.url.startsWith('/users')) usuario.admin = false //se na requisicao não tiver /usuarios
+            if(!req.usuario || !req.usuario.admin) usuario.admin = false
         
             try {
                 existeOuErro(usuario.name, "Nome não informado")
