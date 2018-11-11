@@ -7,7 +7,7 @@ module.exports = app =>{
         if(!req.body.email || !req.body.password){
             return res.status(400).send('Informe usuario e senha')
         }
-        const user = await app.db(' ') //get no usuario do banco
+        const user = await app.db('users') //get no usuario do banco
             .where({email: req.body.email})
             .first()
 

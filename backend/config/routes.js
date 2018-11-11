@@ -49,5 +49,6 @@ module.exports = app =>{
         .get(app.api.artigos.getByCategoria)
 
     app.route('/stats')
-     .get(app.api.estatistica.get)
+        .all(app.config.passport.autenticacao())
+        .get(app.api.estatistica.get)
 }
