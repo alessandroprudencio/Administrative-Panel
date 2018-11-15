@@ -15,7 +15,7 @@ import router from './config/router'
 Vue.config.productionTip = false
 
 //conifgura axio para pegar token 
-require('axios').defaults.headers.common['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6InRlc3RlIiwiZW1haWwiOiJhbGVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTk3NjA3MiwiZXhwIjoxNTQxOTc5NjcyfQ.V326hUC6W-v__AKuKTpEIs_osnJUOJRnstEiIk1U6AI'
+require('axios').defaults.headers.common['Authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwibmFtZSI6IkFsZXNzYW5kcm8gUHJ1ZGVuY2lvIiwiZW1haWwiOiJhbGVzc2FuZHJvQGdtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE1NDIyODcxMjgsImV4cCI6MTU0MjI5MDcyOH0.HMyU4zDksjk0WTdQgM5PwfVNVtZIZiqQAaEl0vDcRZg'
 
 new Vue({
   store,

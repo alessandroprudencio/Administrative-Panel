@@ -1,22 +1,23 @@
 <template>
     <div class="admin-user">
         <b-form>
-            <input id="user-id" type="hidden" v-model="user.id"/>
-            
+            <input id="user-id" type="hidden" v-model="user.id"/>           
             <b-row>
                 <b-col md="6" sm="12">
                     <b-form-group label="Nome:" label-for="user-name">
-                        <b-form-input id="user-name" type="text" v-model="user.name" required placeholder="Informe o nome de usuário..."/>
+                        <b-form-input id="user-name" :readonly="modo==='remove'" type="text" v-model="user.name" required placeholder="Informe o nome de usuário..."/>
                     </b-form-group>
                 </b-col>
                  <b-col md="6" sm="12">
                     <b-form-group label="E-mail:" label-for="user-email">
-                        <b-form-input id="user-email" type="text" v-model="user.email" required placeholder="Informe o e-mail de usuário..."/>
+                        <b-form-input id="user-email" :readonly="modo==='remove'" type="text" v-model="user.email" required placeholder="Informe o e-mail de usuário..."/>
                     </b-form-group>
                 </b-col>
             </b-row>
-            <b-form-checkbox id="user-admin" v-model="user.admin" class="mt-2 mb-3">Administrador ?</b-form-checkbox>
-             <b-row>
+
+            <b-form-checkbox id="user-admin" :disabled="modo==='remove'" v-model="user.admin" class="mt-2 mb-3">Administrador ?</b-form-checkbox>
+             
+             <b-row v-show="modo ==='save'">
                 <b-col md="6" sm="12">
                     <b-form-group label="Senha:" label-for="user-senha">
                         <b-form-input id="user-senha" type="password" v-model="user.password" required placeholder="Informe a senha do usuário..."/>
@@ -29,13 +30,22 @@
                 </b-col>
             </b-row>
             
-            <b-button variant="primary" v-if="modo==='save'" @click="save"> Salvar </b-button>
-            <b-button variant="danger" v-if="modo==='remove'" @click="remove"> Excluir </b-button>
-            <b-button class="ml-2" @click="cancelar"> Cancelar </b-button>
+            <b-row>
+                <b-col xs="12">
+                    <b-button variant="primary" v-if="modo==='save'" @click="save"> Salvar </b-button>
+                    <b-button variant="danger" v-if="modo==='remove'" @click="remove"> Excluir </b-button>
+                    <b-button class="ml-2" @click="cancelar" > Cancelar </b-button>
+                </b-col>
+            </b-row>
 
             </b-form>
             <hr>
-        <b-table hover striped :items="users" :fields="fields"></b-table>
+        <b-table hover striped :items="users" :fields="fields">
+            <template slot="actions" slot-scope="data">
+                <b-button variant="warning" @click="carregaUser(data.item)" class="mr-2"><i class="fa fa-pencil"></i></b-button>   
+                <b-button variant="danger" @click="carregaUser(data.item, 'remove')"><i class="fa fa-trash"></i> </b-button>   
+            </template>
+        </b-table>
     </div>
 </template>
 
@@ -51,11 +61,11 @@ export default {
             user:{},
             users:[],
             fields:[
-                {   key: 'id', label:'Código', sortable:true},
+                //{   key: 'id', label:'Código', sortable:true},
                 {   key: 'name', label:'Nome', sortable:true},
                 {   key: 'email', label:'E-mail', sortable:true},
-                {   key: 'admin', label:'Administrador', sortable:true,     formatter: value => value  ? 'Sim':'Não'},
-                {   key: 'action', label:"Ações"}
+                {   key: 'admin', label:'Administrador', sortable:true, formatter: value => value  ? 'Sim':'Não'},
+                {   key: 'actions', label:"Ações"}
 
             ]
         }
@@ -68,7 +78,7 @@ export default {
             })
         },
         cancelar(){
-            this.mode = 'save'
+            this.modo = 'save'
             this.user = {}
             this.getUsuarios()
 
@@ -88,9 +98,15 @@ export default {
             axios.delete(`${ApiUrl}/users/${id}`)
             .then(()=>{
                 this.$toasted.global.defaultSuccess()
+                this.cancelar()
             }).catch(mostraErros)
+        },
+        carregaUser(user, modo= 'save'){
+            this.modo = modo
+            this.user = {...user}
         }
     },
+            
     mounted(){
         this.getUsuarios()
     }
@@ -103,5 +119,10 @@ export default {
     }
     #__BVID__24{
         margin:0px;
+    }
+    #tbody .table th, .table td {
+        vertical-align:0;
+        padding: 1px;
+        padding-left:1% ;
     }
 </style>
