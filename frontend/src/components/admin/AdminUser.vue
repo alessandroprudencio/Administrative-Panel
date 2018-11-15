@@ -1,7 +1,8 @@
 <template>
     <div class="admin-user">
         <b-form>
-            <input id="user-id" type="hidden" v-model="user.id"/>           
+            <input id="user-id" type="hidden" v-model="user.id"/>  
+
             <b-row>
                 <b-col md="6" sm="12">
                     <b-form-group label="Nome:" label-for="user-name">
@@ -39,13 +40,15 @@
             </b-row>
 
             </b-form>
+
             <hr>
-        <b-table hover striped :items="users" :fields="fields">
-            <template slot="actions" slot-scope="data">
-                <b-button variant="warning" @click="carregaUser(data.item)" class="mr-2"><i class="fa fa-pencil"></i></b-button>   
-                <b-button variant="danger" @click="carregaUser(data.item, 'remove')"><i class="fa fa-trash"></i> </b-button>   
-            </template>
-        </b-table>
+
+            <b-table dark :items="users" :fields="fields">
+                <template slot="actions" slot-scope="data">
+                    <b-button variant="prymary" @click="carregaUser(data.item)" class="mr-2"><i class="fa fa-pencil"></i></b-button>   
+                    <b-button variant="danger" @click="carregaUser(data.item, 'remove')"><i class="fa fa-pencil"></i> </b-button>   
+                </template>
+            </b-table>
     </div>
 </template>
 
@@ -81,7 +84,6 @@ export default {
             this.modo = 'save'
             this.user = {}
             this.getUsuarios()
-
         },
         save(){
             const metodo = this.user.id ? "put" : "post"

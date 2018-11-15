@@ -2,7 +2,14 @@ module.exports = app => {
     const { existeOuErro, naoExisteOuErro } = app.api.validacoes
 
     const save = (req, res) => {
-        const categoria = {...req.body}
+        //const categoria = {...req.body}
+        
+        //maior segurança pegando o que realmente necessita
+        const categoria = {
+            id:req.body.id,
+            name:req.body.name,
+            parentId:req.body.parentId
+        }
         
         if(req.params.id) categoria.id = req.params.id
 
@@ -26,23 +33,23 @@ module.exports = app => {
         }
     }
 
-    const remove = async (req, res) => {
+    const remove =  (req, res) => {
         try {
-            existeOuErro(req.params.id, 'Código da Categoria não informado.')
+             existeOuErro(req.params.id, 'Código da Categoria não informado.')
 
-            const subCategoria = await app.db('categories')
+            const subCategoria = app.db('categories')
                 .where({ parentId: req.params.id })
             naoExisteOuErro(subCategoria, 'Categoria possui subcategorias.')
 
-            const artigos = await app.db('articles')
-                .where({ categoriaId: req.params.id })
-            naoExisteOuErro(artigos, 'Categoria possui artigos.')
+              const artigos =  app.db('articles')
+                  .where({ categoryId: req.params.id })
+              naoExisteOuErro(artigos, 'Categoria possui artigos.')
 
-            const rowsDeleted = await app.db('categories')
-                .where({ id: req.params.id }).del()
-            existeOuErro(rowsDeleted, 'Categoria não foi encontrada.')
+            //  const rowsDeleted =   app.db('categories')
+            //      .where({ id: req.params.id }).del()
+            //  existeOuErro(rowsDeleted, 'Categoria não foi encontrada.')
 
-            res.status(204).send()
+            res.status(200).send()
         } catch(msg) {
             res.status(400).send(msg)
         }
@@ -101,7 +108,7 @@ module.exports = app => {
 
     const getTree = (req,res) =>{
         app.db('categories')
-            .then(categorias => res.json(toTree(comCaminho(categorias))))//gera todas as categorias com caminho o resultado vai ser recebido pela funcao toTree que converte em arvore
+            .then(categorias => res.json(toTree(categorias)))//gera todas as categorias com caminho o resultado vai ser recebido pela funcao toTree que converte em arvore
             .catch(error => res.status(500).send(error))
         }
 

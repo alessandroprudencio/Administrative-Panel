@@ -33,7 +33,7 @@ module.exports = app =>{
         .put(admin(app.api.categorias.save))
         .delete(admin(app.api.categorias.remove))
 
-    app.route('/artigo/')
+    app.route('/artigo')
         .all(app.config.passport.autenticacao())
         .get(admin(app.api.artigos.get))
         .post(admin(app.api.artigos.save))

@@ -55,4 +55,12 @@ export default {
 			"footer footer"
 
 	}
+	tbody .btn-prymary{
+		margin-top:4px;
+		margin-bottom:4px;
+		padding: 5px 10px 3px 10px;
+	}
+    tbody .btn-danger{
+		padding: 5px 10px 3px 10px;
+	}
 </style>
