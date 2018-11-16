@@ -1,12 +1,13 @@
 const queries = require('./queries')
 
 module.exports = app =>{
-    const {existeOuErro, naoExisteOuErro} = app.api.validacoes
+    const {existeOuErro} = app.api.validacoes
 
     const save =(req,res) =>{
         const artigo = {...req.body}
 
         if(req.params.id) artigo.id = req.params.id
+
         try{
             existeOuErro(artigo.name, 'Nome não informado')
             existeOuErro(artigo.description, "Descrição não informada")
@@ -44,7 +45,7 @@ module.exports = app =>{
         }
     }
 
-    const limit = 10 // usada para paginação
+    const limit = 3 // usada para paginação
     const get = async (req,res)=>{
         const page = req.query.page || 1
 
@@ -55,7 +56,7 @@ module.exports = app =>{
             .select('id','name','description')
             .limit(limit)
             .offset(page * limit - limit)
-            .then(artigo => res.json({data:artigo, count, limit}))
+            .then(artigos => res.json({data:artigos, count, limit}))
             .catch(erro => res.status(500).send(erro))
     }
     const getById = (req,res)=>{
@@ -64,6 +65,7 @@ module.exports = app =>{
         .first()
         .then(artigo =>{
             artigo.content = artigo.content.toString() //artigo vem em formato binario
+            return res.json(artigo)
         })
         .catch(erro => res.status(500).send(erro))
     }

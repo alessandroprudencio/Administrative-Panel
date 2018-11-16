@@ -1,10 +1,10 @@
 <template>
     <div class="admin-category">
         <b-form>
-            <input id="category-id" type="hidden" v-model="categoria.id">
+            <input id="category-id" type="hidden" v-model="categoria.id"/>
     
                     <b-form-group label="Nome:"  label-for="category-name">
-                        <b-form-input id="category-name" :disabled="modo==='remove'" type="text" v-model="categoria.name" required placeholder="Insira o nome da categoria..."/>
+                        <b-form-input id="category-name" :disabled="modo==='remove'" type="text" v-model="categoria.name" required placeholder="Insira o nome da Categoria..."/>
                     </b-form-group>
     
             
@@ -13,10 +13,10 @@
                     </b-form-group>
          
 
-                        <b-button variant="primary" v-if="modo==='save'" @click="save">Salvar</b-button>
-                        <b-button variant="danger" v-if="modo==='remove'" @click="remove">Excluir</b-button>
-                        <b-button  class="ml-2" @click="cancelar">Cancelar </b-button>
-          
+                    <b-button variant="primary" v-if="modo==='save'" @click="save">Salvar</b-button>
+                    <b-button variant="danger" v-if="modo==='remove'" @click="remove">Excluir</b-button>
+                    <b-button  class="ml-2" @click="cancelar">Cancelar </b-button>
+        
         </b-form>
 
         <hr>
@@ -38,7 +38,7 @@ export default {
     name:"AdminCategory",
     data:function(){
         return{
-            modo:'',
+            modo:'save',
             categoria:{},
             categorias:[],
             fields:[
@@ -89,7 +89,6 @@ export default {
     },
     mounted(){
         this.getCategorias()
-        this.modo = 'save'
     }
 }
 </script>

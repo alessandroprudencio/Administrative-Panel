@@ -63,4 +63,12 @@ export default {
     tbody .btn-danger{
 		padding: 5px 10px 3px 10px;
 	}
+	thead .sorting{
+		font-family:'Raleway','sans-serif ';
+        font-weight: 100;
+	}
+	thead th{
+		font-family:'Raleway','sans-serif ';
+        font-weight: 100;
+	}
 </style>
