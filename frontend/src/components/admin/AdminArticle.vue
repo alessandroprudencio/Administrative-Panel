@@ -41,6 +41,7 @@
                  <b-button variant="danger" @click="carregaArtigo(data.item, 'remove')"><i class="fa fa-trash"></i></b-button>               
             </template>
         </b-table>
+        <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit"></b-pagination>
     </div>
 </template>
 
@@ -66,13 +67,14 @@ export default {
                 //{key:'id', label:"Código", sortable:"true"},
                 {key:'name', label:"Titulo", sortable:"true"},
                 {key:'description',label:"Descrição",class:"tamanhoDescricao", sortable:"true"},
+                {key:'autor',label:"Autor", sortable:"true"},
                 {key:'actions', label:"Ações"}
             ]
         }
     },
     methods:{
         getArtigos(){
-            const url = `${ApiUrl}/artigo`
+            const url = `${ApiUrl}/artigo?page=${this.page}`
             axios.get(url).then(resp => {
                 this.artigos = resp.data.data 
                 this.limit = resp.data.limit 
@@ -124,6 +126,11 @@ export default {
                 this.$toasted.global.defaultSuccess()
                 this.cancelar()
             }).catch(mostraErros)
+        }
+    },
+    watch:{
+        page(){
+            this.getArtigos()
         }
     },
     mounted(){

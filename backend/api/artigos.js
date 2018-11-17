@@ -38,7 +38,11 @@ module.exports = app =>{
             const linhasExcluidas = await app.db('articles')
                 .where({id: req.params.id})
                 .del()
-            existeOuErro(linhasExcluidas, "Artigo não foi encontrado")//linhas não excluir
+                try {
+                    existeOuErro(linhasExcluidas, "Artigo não foi encontrado")//linhas não excluir
+                } catch(msg) {
+                    return res.status(400).send(msg)    
+                }
             res.status(204).json(linhasExcluidas)
         }catch(msg){
             res.status(500).send(msg)
@@ -52,10 +56,11 @@ module.exports = app =>{
         const result = await app.db('articles').count('id').first()
         const count = parseInt(result.count)
 
-        app.db('articles')
-            .select('id','name','description')
+        app.db({a:'articles',u:'users'})
+            .select('a.id','a.name', 'a.description', {autor:'u.name'})
             .limit(limit)
             .offset(page * limit - limit)
+            .whereRaw('?? = ??', ['u.id', 'a.userId']) //ENCONTRA QUEM POSTO SE NÃO COLOCAR FICA LOOP
             .then(artigos => res.json({data:artigos, count, limit}))
             .catch(erro => res.status(500).send(erro))
     }
@@ -77,7 +82,7 @@ module.exports = app =>{
         const ids = categorias.rows.map(c => c.id)//obtendo array de ids  das categorias pais mais categoria filho
 
             //consulta que obtem artigos
-        app.db({a:'articles',u:'users'})
+        await app.db({a:'articles',u:'users'})
             .select('a.id','a.name', 'a.description', 'a.imageUrl', {autor:'u.name'})
             .limit(limit).offset(page * limit - limit)
             .whereRaw('?? = ??', ['u.id', 'a.userId'])//iguala as duas tabelas, para encontrar quem o autor do artigo
@@ -85,8 +90,6 @@ module.exports = app =>{
             .orderBy('a.id','desc')//do maior id para o menor, ou seja do mais novo para o mais antigo
             .then(artigo => res.json(artigo))
             .catch(erro => res.status(500).send(erro))
-
-
     }
 
 

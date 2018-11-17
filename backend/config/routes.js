@@ -44,7 +44,7 @@ module.exports = app =>{
         .put(admin(app.api.artigos.save))
         .delete(admin(app.api.artigos.remove))
 
-    app.route('/categorias/:id/artigos') //pega o artigo da categoria tal
+    app.route('/categoria/:id/artigos') //pega o artigo da categoria tal
         .all(app.config.passport.autenticacao())
         .get(app.api.artigos.getByCategoria)
 
