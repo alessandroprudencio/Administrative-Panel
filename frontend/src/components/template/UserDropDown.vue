@@ -10,7 +10,7 @@
 
         <div class="user-DropDown-Content">
                 <router-link to="/admin"><i class="fa fa-cogs"><span>Administração</span></i></router-link>
-                <router-link to="/"><i class="fa fa-sign-out"><span>Sair</span></i></router-link>
+                <a href @click.prevent="sair"><i class="fa fa-sign-out"><span>Sair</span></i></a>
 
         </div>
 
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { userKey } from '@/global'
 //maper o usuario da store
 import { mapState } from 'vuex'
 import Gravatar from 'vue-gravatar' 
@@ -25,7 +26,14 @@ import Gravatar from 'vue-gravatar'
 export default {
     name:'UserDropDown',
     components:{Gravatar},
-    computed:mapState(['user']) //tenho acesso ao usuario da store
+    computed:mapState(['user']), //tenho acesso ao usuario da store,
+    methods:{
+        sair(){
+            localStorage.removeItem(userKey)
+            this.$store.commit('setUser', null)
+            this.$router.push({name:'Auth'})
+        }
+    }
 }
 </script>
 
