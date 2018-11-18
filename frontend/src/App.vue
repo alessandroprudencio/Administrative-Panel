@@ -5,23 +5,57 @@
 		:escondeUserDropDown="!user"
 		/>
 		<Menu v-if="user"/>
-		<Content/>
+		<AntesDeTudo v-if="validandoToken"/>
+		<Content v-else/>
 		<Footer/>
 	</div>
 </template>
 
 <script>
+import axios from 'axios'
+import {apiUrl, userKey} from '@/global'
 import { mapState } from 'vuex'
 import  Header  from "@/components/template/Header";
 import  Content  from "@/components/template/Content";
 import  Footer  from "@/components/template/Footer";
 import  Menu  from "@/components/template/Menu";
-
+import  AntesDeTudo from "@/components/template/antesDeTudo"
 
 export default {
 	name: "App",
-	components:{ Header, Content, Footer, Menu },
-	computed: mapState(['isMenuVisible','user'])
+	components:{ Header, Content, Footer, Menu ,AntesDeTudo},
+	computed: mapState(['isMenuVisible','user']),
+	data:function(){
+		return	{
+			validandoToken:true
+		}
+	},
+	methods:{
+		async validaToken(){
+			this.validandoToken = true
+			const json = localStorage.getItem(userKey)
+			const userData = JSON.parse(json)
+			this.$store.commit('setUser', null)
+			
+			if(!userData){
+				this.validandoToken = false
+				return this.$router.push({name:'Auth'})
+			}
+			const res = await axios.post(`${apiUrl}/validaToken`,userData)
+			if(res.data){
+				this.$store.commit('setUser', userData)
+			}else{
+				localStorage.removeItem(userKey)
+				this.$router.push({name:"Auth"})
+			}
+
+				this.validandoToken  = false
+
+		}
+	},
+	mounted(){
+		this.validaToken();
+	}
 }
 </script>
 

@@ -65,7 +65,7 @@ export default {
     .menu a:hover{
         color: #fff;
         text-decoration: none;
-        font-size: 1.1rem;
+        font-size: 1rem;
 
     }
     .menu .tree-node.selected > .tree-content,
@@ -89,14 +89,14 @@ export default {
     }
     .menu input{
         color: #fff;
-        font-size: 1.1rem;
+        font-size: 1rem;
         border:none;
         outline: 0;
         width: 100%;
         background: transparent;
     }
     .tree-filter-empty{
-        font-size: 1.1rem;
+        font-size: 1rem;
         color: white;
         margin-left:20px;
     }

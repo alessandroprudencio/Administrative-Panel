@@ -9,6 +9,7 @@ import ArticleByCategory from '@/components/artigo/articleByCategory'
 import ArticleById from  '@/components/artigo/articleById'
 import Auth from  '@/components/auth/auth'
 
+import {userKey} from '@/global'
 
 const routes =[{
     name:'home',
@@ -18,7 +19,8 @@ const routes =[{
     {
      name:'AdminPages',
      path:'/admin',
-     component:AdminPages
+     component:AdminPages,
+     meta:{ requiresAdmin:true }
     },
     {
     name:'ArticleByCategory',
@@ -37,8 +39,19 @@ const routes =[{
     }
 ]
 
-export default new VueRouter({
+const router = new VueRouter({
     mode:'history',
     routes
 })
 
+router.beforeEach((to, from, next)=>{ // BLOQUEANDO A ROTA DE ADM CASO NAO ADMIN
+    const json = localStorage.getItem(userKey)
+    if(to.matched.some(record => record.meta.requiresAdmin)){
+        const user = JSON.parse(json)
+        user && user.admin ? next() : next({path: '/'})
+    }else{
+        next()
+    }
+})
+
+export default router

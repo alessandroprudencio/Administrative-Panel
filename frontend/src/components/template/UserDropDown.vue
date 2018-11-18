@@ -9,7 +9,7 @@
         </div>
 
         <div class="user-DropDown-Content">
-                <router-link to="/admin"><i class="fa fa-cogs"><span>Administração</span></i></router-link>
+                <router-link v-if="user.admin" to="/admin"><i class="fa fa-cogs"><span>Administração</span></i></router-link>
                 <a href @click.prevent="sair"><i class="fa fa-sign-out"><span>Sair</span></i></a>
 
         </div>
