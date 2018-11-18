@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {ApiUrl} from  "@/global"
+import {apiUrl} from  "@/global"
 import axios from 'axios'
 import PageTitle from '../template/PageTitle' 
 
@@ -20,7 +20,7 @@ export default {
         }
     },
     mounted(){
-        const url = `${ApiUrl}/artigo/${this.$route.params.id}`
+        const url = `${apiUrl}/artigo/${this.$route.params.id}`
         axios.get(url).then(resp => {
             this.artigo = resp.data
         })

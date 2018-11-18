@@ -7,6 +7,8 @@ import Home from '@/components/home/Home'
 import AdminPages from '@/components/admin/AdminPages'
 import ArticleByCategory from '@/components/artigo/articleByCategory'
 import ArticleById from  '@/components/artigo/articleById'
+import Auth from  '@/components/auth/auth'
+
 
 const routes =[{
     name:'home',
@@ -27,6 +29,11 @@ const routes =[{
     name:'ArticleById',
     path:'/artigo/:id',
     component:ArticleById
+    },
+    {
+    name:'Auth',
+    path:'/auth',
+    component:Auth
     }
 ]
 

@@ -1,9 +1,10 @@
-//quando receber .catch 
 import Vue from 'vue'
 
-export const ApiUrl = 'http://localhost:3000'
+//
+export const userKey = '__user'
+export const apiUrl = 'http://localhost:3000'
 
-export function mostraErros(erros){
+export function mostraErro(erros){
     if(erros && erros.response && erros.response.data){
         Vue.toasted.global.defaultError({ msg: erros.response.data })
     }else if(typeof erros === 'string') {
@@ -13,4 +14,4 @@ export function mostraErros(erros){
     }
 }
 
-export default { ApiUrl, mostraErros}
+export default { apiUrl, mostraErro, userKey}

@@ -48,7 +48,7 @@
 <script>
 import {VueEditor} from 'vue2-editor'
 import axios from 'axios'
-import {ApiUrl, mostraErros} from '@/global'
+import {apiUrl, mostraErro} from '@/global'
 
 export default {
     name:"ArticleAdmin",
@@ -74,7 +74,7 @@ export default {
     },
     methods:{
         getArtigos(){
-            const url = `${ApiUrl}/artigo?page=${this.page}`
+            const url = `${apiUrl}/artigo?page=${this.page}`
             axios.get(url).then(resp => {
                 this.artigos = resp.data.data 
                 this.limit = resp.data.limit 
@@ -82,7 +82,7 @@ export default {
             }) 
         },
          getCategorias(){
-            const url = `${ApiUrl}/categoria`
+            const url = `${apiUrl}/categoria`
             axios.get(url).then( resp => {
                this.categorias = resp.data.map(categoria => {
                     return {... categoria, value:categoria.id, text:categoria.path}
@@ -90,7 +90,7 @@ export default {
             })
         },
         getUsuarios(){
-            const url = `${ApiUrl}/users`
+            const url = `${apiUrl}/users`
             axios.get(url).then( resp => {
                this.usuarios = resp.data.map(usuario => {
                     return {value:usuario.id, text:`${usuario.name} - ${usuario.email}`}
@@ -107,25 +107,25 @@ export default {
             const metodo = this.artigo.id ? "put" : "post"
             const id = this.artigo.id ? `${this.artigo.id}` : ''
 
-            axios[metodo](`${ApiUrl}/artigo/${id}`, this.artigo)
+            axios[metodo](`${apiUrl}/artigo/${id}`, this.artigo)
                 .then(()=>{
                     this.$toasted.global.defaultSuccess()
                     this.cancelar();
-                }).catch(mostraErros)
+                }).catch(mostraErro)
         },
          carregaArtigo(artigo, modo= 'save'){
             this.modo = modo
             //this.artigo = {...artigo}
-             axios.get(`${ApiUrl}/artigo/${artigo.id}`)
+             axios.get(`${apiUrl}/artigo/${artigo.id}`)
                    .then(res => this.artigo = res.data)                  
         },
          remove(){
             const id = this.artigo.id
-            axios.delete(`${ApiUrl}/artigo/${id}`)
+            axios.delete(`${apiUrl}/artigo/${id}`)
             .then(()=>{
                 this.$toasted.global.defaultSuccess()
                 this.cancelar()
-            }).catch(mostraErros)
+            }).catch(mostraErro)
         }
     },
     watch:{

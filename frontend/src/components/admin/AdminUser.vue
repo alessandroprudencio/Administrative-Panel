@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { ApiUrl, mostraErros }  from '@/global'
+import { apiUrl, mostraErro }  from '@/global'
 import axios from 'axios'
 
 export default {
@@ -75,7 +75,7 @@ export default {
     },
     methods:{
         getUsuarios(){
-            const url = `${ApiUrl}/users`
+            const url = `${apiUrl}/users`
             axios.get(url).then(resp => {
                 this.users = resp.data
             })
@@ -89,19 +89,19 @@ export default {
             const metodo = this.user.id ? "put" : "post"
             const id = this.user.id ? `/${this.user.id}` : ''
 
-            axios[metodo](`${ApiUrl}/users${id}`, this.user)
+            axios[metodo](`${apiUrl}/users${id}`, this.user)
                 .then(()=>{
                     this.$toasted.global.defaultSuccess()
                     this.cancelar();
-                }).catch(mostraErros)
+                }).catch(mostraErro)
         },
         remove(){
             const id = this.user.id
-            axios.delete(`${ApiUrl}/users/${id}`)
+            axios.delete(`${apiUrl}/users/${id}`)
             .then(()=>{
                 this.$toasted.global.defaultSuccess()
                 this.cancelar()
-            }).catch(mostraErros)
+            }).catch(mostraErro)
         },
         carregaUser(user, modo= 'save'){
             this.modo = modo

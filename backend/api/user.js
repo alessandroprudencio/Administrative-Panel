@@ -30,9 +30,9 @@ module.exports = app => {
                         naoExisteOuErro(usuarioFromDB, "Usuario já cadastrado")                
                     }
                     
-            } catch (msg) {
-                return res.status(400).send(msg)
-            }
+                } catch (msg) {
+                    return res.status(400).send(msg)
+                }
             usuario.password = encryptSenha(usuario.password) 
             delete usuario.confirmaSenha
 

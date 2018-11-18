@@ -15,7 +15,7 @@ import PageTitle from '../template/PageTitle'
 import Estatisca from '../home/Estatisca'
 
 import axios from 'axios'
-import { ApiUrl }  from '@/global'
+import { apiUrl }  from '@/global'
 
 export default {
     name:"Home",
@@ -27,7 +27,7 @@ export default {
     },
     methods:{
         getEstatistica(){
-            axios.get(`${ApiUrl}/stats`).then(res => this.estatistica = res.data)
+            axios.get(`${apiUrl}/stats`).then(res => this.estatistica = res.data)
         }
     },
     mounted(){

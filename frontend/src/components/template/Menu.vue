@@ -11,7 +11,7 @@
 <script>
 import { mapState } from 'vuex' //mapea o atributo computed da store
 import Tree from 'liquor-tree'
-import {ApiUrl} from '@/global'
+import {apiUrl} from '@/global'
 import axios from 'axios'
 
 export default {
@@ -35,7 +35,7 @@ export default {
     },
     methods:{
         getDadosArvore(){
-            const url = `${ApiUrl}/categoria/tree`
+            const url = `${apiUrl}/categoria/tree`
             return axios(url).then(res => res.data)
         },
         onNodeSelect(node){

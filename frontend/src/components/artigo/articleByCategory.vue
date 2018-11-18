@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {ApiUrl} from '@/global'
+import {apiUrl} from '@/global'
 import axios from 'axios'
 import PageTitle from '../template/PageTitle'
 import ArticleItem from './articleItem'
@@ -31,11 +31,11 @@ export default {
     },
     methods:{
         getCategoria(){
-            const url = `${ApiUrl}/categoria/${this.categoria.id}`
+            const url = `${apiUrl}/categoria/${this.categoria.id}`
             axios(url).then(res => this.categoria = res.data )
         },
         getArtigos(){
-            const url =  `${ApiUrl}/categoria/${this.categoria.id}/artigos?page=${this.page}`
+            const url =  `${apiUrl}/categoria/${this.categoria.id}/artigos?page=${this.page}`
             axios(url).then(res => {
                 this.artigos = this.artigos.concat(res.data)
                 this.page++

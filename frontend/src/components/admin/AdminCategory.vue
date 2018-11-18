@@ -32,7 +32,7 @@
 
 <script>
 import axios from 'axios'
-import {ApiUrl, mostraErros} from '@/global'
+import {apiUrl, mostraErro} from '@/global'
 
 export default {
     name:"AdminCategory",
@@ -51,7 +51,7 @@ export default {
     },
     methods:{
         getCategorias(){
-            const url = `${ApiUrl}/categoria`
+            const url = `${apiUrl}/categoria`
             axios.get(url).then(resp => {
                 //this.categorias =resp.data
                 this.categorias = resp.data.map(categoria => {
@@ -66,21 +66,21 @@ export default {
         },
         remove(){
             const id = this.categoria.id
-            axios.delete(`${ApiUrl}/categoria/${id}`)
+            axios.delete(`${apiUrl}/categoria/${id}`)
             .then(()=>{
                 this.$toasted.global.defaultSuccess()
                 this.cancelar()
-            }).catch(mostraErros)
+            }).catch(mostraErro)
         },
         save(){
             const metodo = this.categoria.id ? "put" : "post"
             const id = this.categoria.id ? `${this.categoria.id}` : ''
 
-            axios[metodo](`${ApiUrl}/categoria/${id}`, this.categoria)
+            axios[metodo](`${apiUrl}/categoria/${id}`, this.categoria)
                 .then(()=>{
                     this.$toasted.global.defaultSuccess()
                     this.cancelar();
-                }).catch(mostraErros)
+                }).catch(mostraErro)
         },
         carregaCategoria(categoria, modo= 'save'){
             this.modo = modo

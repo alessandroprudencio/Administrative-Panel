@@ -17,6 +17,7 @@ import  Content  from "@/components/template/Content";
 import  Footer  from "@/components/template/Footer";
 import  Menu  from "@/components/template/Menu";
 
+
 export default {
 	name: "App",
 	components:{ Header, Content, Footer, Menu },
