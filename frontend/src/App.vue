@@ -1,10 +1,10 @@
 <template>
-	<div id="app" :class="{'hide-menu':!isMenuVisible}"> <!-- SE NÃO ESTIVER VISIVEL APLICA O CSS-->
+	<div id="app" :class="{'hide-menu':!isMenuVisible || !user}"> <!-- SE NÃO ESTIVER VISIVEL APLICA O CSS-->
 		<Header title="Alessandro - ADM de artigos" 
-		:escondeToogle="false"
-		:escondeUserDropDown="true"
+		:escondeToogle="!user"
+		:escondeUserDropDown="!user"
 		/>
-		<Menu/>
+		<Menu v-if="user"/>
 		<Content/>
 		<Footer/>
 	</div>
@@ -20,7 +20,7 @@ import  Menu  from "@/components/template/Menu";
 export default {
 	name: "App",
 	components:{ Header, Content, Footer, Menu },
-	computed: mapState(['isMenuVisible'])
+	computed: mapState(['isMenuVisible','user'])
 }
 </script>
 
