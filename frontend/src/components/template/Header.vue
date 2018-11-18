@@ -37,47 +37,41 @@ export default {
 </script>
 
 <style>
-    .header{
+     .header {
         grid-area: header;
-        margin-left:0.10%; 
+        background: linear-gradient(to right, #1e469a, #49a7c1);
         display: flex;
         justify-content: center;
-        align-items:center;
-        border-bottom: 1px solid #ccc;
+        align-items: center;
     }
-
-    .title{
-        font-size: 1.1rem;
-        color: black;
+    .title {
+        font-size: 1.2rem;
+        color: #fff;
         font-weight: 100;
         flex-grow: 1;
-        text-align: center; 
-        margin-top:0.5%;
+        text-align: center;
     }
-    .title a{
-        color:#000;
+    .title a {
+        color: #FFF;
         text-decoration: none;
-    } 
-    .title a:hover{
-        color:#000;
+    }
+    .title a:hover {
+        color: #FFF;
         text-decoration: none;
     }
     header.header > a.toggle {
-        cursor: pointer;
         width: 60px;
         height: 100%;
-        color: #000;
+        color: #fff;
+        justify-self: flex-start;
         text-decoration: none;
         display: flex;
         justify-content: center;
         align-items: center;
     }
     header.header > a.toggle:hover {
-        background-color: #e0dede;
-    }
-    .fa-lg{
-            font-size: 1.1rem;
-            margin-right: 5%;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.2);
     }
 
 </style>

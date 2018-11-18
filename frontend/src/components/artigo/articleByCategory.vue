@@ -44,6 +44,17 @@ export default {
             })
         }
     },
+    watch:{
+        //monitora a rota e chama a rota e zera o componente para exibir nova categoria
+        $route(to){
+            this.categoria.id = to.params.id
+            this.artigos = []
+            this.page=1
+            this.carregarMais = true;
+            this.getCategoria();
+            this.getArtigos();
+        }
+    },
     mounted(){
         this.categoria.id = (this.$route.params.id)
         this.getCategoria()

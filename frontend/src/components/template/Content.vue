@@ -15,6 +15,5 @@ export default {
         grid-area: content;
         padding:20px;
         margin-left:0.30%; 
-        z-index:-1;        
     }
 </style>
