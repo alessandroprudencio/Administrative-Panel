@@ -7,7 +7,7 @@
 
         <h1 class="title"><router-link to="/"> {{title}}</router-link></h1>
 
-        <UserDropDown v-if="!escondeDropDown"/>
+        <UserDropDown v-if="!escondeUserDropDown"/>
 
     </header>
 </template>
@@ -21,7 +21,7 @@ export default {
     props:{
         title:String,
         escondeToogle: Boolean,
-        escondeDropDown:Boolean
+        escondeUserDropDown:Boolean
     },
     computed:{
         icon(){
@@ -68,10 +68,10 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        
     }
     header.header > a.toggle:hover {
         color: #fff;
         background-color: rgba(0, 0, 0, 0.2);
     }
-
 </style>

@@ -12,7 +12,7 @@ export default new Vuex.Store({
     mutations : {
         //alternar o estado do menu
         toogleMenu(state, isVisible){
-            if(!state.use){
+            if(!state.user){
                 state.isMenuVisible = false
                 return
             }

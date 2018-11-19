@@ -13,7 +13,7 @@
             <b-form-input  type="password" name="password" v-model="user.password" placeholder="Senha:"/>
             <b-form-input  v-if="mostraLogin" type="password" v-model="user.confirmaSenha" placeholder="Confirme Senha:"/>
                 
-             <b-button  variant="primary" v-if="mostraLogin" @click="cadastrar">Cadastar</b-button>
+             <b-button  variant="primary" v-if="mostraLogin" @click="cadastrar">Cadastrar</b-button>
              <b-button  variant="primary" v-if="!mostraLogin" @click="entrar">Entrar</b-button>
 
              <a href @click.prevent="mostraLogin = !mostraLogin">
@@ -71,8 +71,6 @@ export default {
     .auth-modal{
         background-color: #ffffff;
         width: 350px;
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-
         display: flex;
         align-items: center;
         flex-direction: column;

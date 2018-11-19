@@ -12,6 +12,10 @@ import store from './config/store'
 
 import router from './config/router'
 
+import   './config/sessaoExpirada'
+
+import './config/mq'
+
 Vue.config.productionTip = false
 
 //conifgura axio para pegar token 

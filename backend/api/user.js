@@ -13,7 +13,7 @@ module.exports = app => {
             const usuario = { ...req.body }
             if(req.params.id) usuario.id =req.params.id
         
-            if(!req.url.startsWith('/users')) usuario.admin = false //se na requisicao não tiver /usuarios
+            if(!req.originalUrl.startsWith('/users')) usuario.admin = false //se na requisicao não tiver /usuarios
             if(!req.usuario || !req.usuario.admin) usuario.admin = false
         
             try {
@@ -49,12 +49,19 @@ module.exports = app => {
                 .catch(err => res.status(500).send(err))
             }
     }
+    const limit = 3 // usada para paginação
 
-    const get = (req, res) => {
+    const get =async  (req, res) => {
+        const page = req.query.page || 1
+
+        const result = await app.db('users').count('id').first()
+        const count = parseInt(result.count)
+
         app.db('users')
             .select('id', 'name', 'email', 'admin', 'deletedAt')
             .whereNull('deletedAt')
-            .then(users => res.json(users))
+            .limit(limit).offset(page * limit - limit)
+            .then(users => res.json({data:users, count, limit}))
             .catch(err => res.status(500).send(err))
     }
 

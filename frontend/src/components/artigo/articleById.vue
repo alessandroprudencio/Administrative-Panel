@@ -7,6 +7,11 @@
 </template>
 
 <script>
+
+import hljs from 'highlightjs/highlight.pack.js';
+import 'highlightjs/styles/dracula.css'
+
+
 import {apiUrl} from  "@/global"
 import axios from 'axios'
 import PageTitle from '../template/PageTitle' 
@@ -24,6 +29,11 @@ export default {
         axios.get(url).then(resp => {
             this.artigo = resp.data
         })
+    },
+    updated(){
+        document.querySelectorAll('.article-content pre').forEach(element => {
+            hljs.highlightBlock(element)
+        });
     }
 }
 </script>
@@ -45,8 +55,5 @@ export default {
     .article-content :last-child{
         margin-bottom: 0px;
     }
-    .ql-syntax{
-        color: #fff;
-        background-color: #23241F;
-    }
+    
 </style>

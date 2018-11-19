@@ -46,9 +46,11 @@
             <b-table dark :items="users" :fields="fields">
                 <template slot="actions" slot-scope="data">
                     <b-button variant="prymary" @click="carregaUser(data.item)" class="mr-2"><i class="fa fa-pencil"></i></b-button>   
-                    <b-button variant="danger" @click="carregaUser(data.item, 'remove')"><i class="fa fa-pencil"></i> </b-button>   
+                    <b-button variant="danger" @click="carregaUser(data.item, 'remove')"><i class="fa fa-trash"></i> </b-button>   
                 </template>
             </b-table>
+        <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit"></b-pagination>
+
     </div>
 </template>
 
@@ -63,6 +65,9 @@ export default {
             modo:'save',
             user:{},
             users:[],
+            page:1,
+            count:0,
+            limit:0,
             fields:[
                 //{   key: 'id', label:'Código', sortable:true},
                 {   key: 'name', label:'Nome', sortable:true},
@@ -75,9 +80,12 @@ export default {
     },
     methods:{
         getUsuarios(){
-            const url = `${apiUrl}/users`
+            const url = `${apiUrl}/users?page=${this.page}`
             axios.get(url).then(resp => {
-                this.users = resp.data
+                this.users = resp.data.data 
+                this.limit = resp.data.limit   
+                this.count = resp.data.count 
+               
             })
         },
         cancelar(){
@@ -106,6 +114,11 @@ export default {
         carregaUser(user, modo= 'save'){
             this.modo = modo
             this.user = {...user}
+        }
+    },
+     watch:{
+        page(){
+            this.getUsuarios()
         }
     },
             

@@ -1,13 +1,27 @@
 <template>
+
 	<div id="app" :class="{'hide-menu':!isMenuVisible || !user}"> <!-- SE NÃO ESTIVER VISIVEL APLICA O CSS-->
+		
+		<transition name="fade" mode="out-in">
 		<Header title="Alessandro - ADM de artigos" 
 		:escondeToogle="!user"
 		:escondeUserDropDown="!user"
 		/>
+		</transition>
+
 		<Menu v-if="user"/>
+
+		<transition name="fade" mode="out-in">
 		<AntesDeTudo v-if="validandoToken"/>
 		<Content v-else/>
+		</transition>
+
 		<Footer/>
+
+ <b-alert :show='false' variant="primary">
+    Primary Alert with <a href="#" class="alert-link">an example link</a>.
+  </b-alert>
+
 	</div>
 </template>
 
@@ -42,8 +56,12 @@ export default {
 				return this.$router.push({name:'Auth'})
 			}
 			const res = await axios.post(`${apiUrl}/validaToken`,userData)
+
 			if(res.data){
 				this.$store.commit('setUser', userData)
+				if(this.$mq === 'xs' || this.$mq ==='sm'){
+                this.$store.commit('toogleMenu', false)
+            }
 			}else{
 				localStorage.removeItem(userKey)
 				this.$router.push({name:"Auth"})
@@ -55,14 +73,13 @@ export default {
 	},
 	mounted(){
 		this.validaToken();
-	}
+	},
 }
 </script>
 
 <style>
 	*{
-		font-family:'Raleway','sans-serif ';
-		
+		font-family:'Raleway','sans-serif ';	
 	}
 	body{
 		margin:0;
@@ -70,7 +87,6 @@ export default {
 	#app {
 		-webkit-font-smoothing:antialised;
 		-moz-osx-font-smoothing:grayscale;
-
 		height: 100vh; 
 		display: grid;
 		grid-template-rows: 50px 1fr 40px;
@@ -82,6 +98,7 @@ export default {
 		"menu footer"
 	}
 	#app.hide-menu{
+
 		grid-template-areas: 
 			"header header"
 			"content content"

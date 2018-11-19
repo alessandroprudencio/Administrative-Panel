@@ -44,6 +44,10 @@ export default {
                 name:'ArticleByCategory',
                 params:{id:node.id}
             })
+
+            if(this.$mq === 'xs' || this.$mq ==='sm'){
+                this.$store.commit('toogleMenu', false)
+            }
         }
     },
     mounted(){
@@ -60,9 +64,11 @@ export default {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
+
     }
     .menu a ,
     .menu a:hover{
+        
         color: #fff;
         text-decoration: none;
         font-size: 1rem;
@@ -70,7 +76,7 @@ export default {
     }
     .menu .tree-node.selected > .tree-content,
     .menu .tree-node .tree-content:hover {
-        background-color: rgba(255, 255, 255, 0.2)
+        background-color: rgba(255, 255, 255, 0.2);
     }
     .tree-arrow.has-child{
         filter:brightness(0)
