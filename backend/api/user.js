@@ -49,19 +49,12 @@ module.exports = app => {
                 .catch(err => res.status(500).send(err))
             }
     }
-    const limit = 3 // usada para paginação
 
-    const get =async  (req, res) => {
-        const page = req.query.page || 1
-
-        const result = await app.db('users').count('id').first()
-        const count = parseInt(result.count)
-
-        app.db('users')
+    const get =  (req, res) => {
+         app.db('users')
             .select('id', 'name', 'email', 'admin', 'deletedAt')
             .whereNull('deletedAt')
-            .limit(limit).offset(page * limit - limit)
-            .then(users => res.json({data:users, count, limit}))
+            .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
     }
 

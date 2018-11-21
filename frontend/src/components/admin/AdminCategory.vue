@@ -42,7 +42,7 @@ export default {
             categoria:{},
             categorias:[],
             fields:[
-                {key:'id', label:"Código", sortable:"true"},
+                //{key:'id', label:"Código", sortable:"true"},
                 {key:'name', label:"Nome", sortable:"true"},
                 {key:'path',label:"Caminho", sortable:"true"},    
                 {key:'actions', label:"Ações"}

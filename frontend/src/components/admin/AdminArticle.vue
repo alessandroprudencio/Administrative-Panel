@@ -12,7 +12,18 @@
                     </b-form-group>
 
                     <b-form-group  v-if="modo==='save'" label="Imagem (URL)" label-for="article-imagem">
-                        <b-form-input  :readonly="modo==='remove'" id="article-imagem" class="mb-3" v-model="artigo.imageUrl" placeholder="Informe a URL da Imagem"/>
+                        <vue-upload-multiple-image
+                        @upload-success="uploadImageSuccess"
+                        @before-remove="beforeRemove"
+                        @edit-image="editImage"
+                        @data-change="dataChange"
+                        :data-images="images"
+                        v-model="artigo.imageUrl"
+                        :readonly="modo==='remove'" 
+                        id="article-imagem" class="mb-3" 
+                        placeholder="Informe a URL da Imagem"
+                        ></vue-upload-multiple-image>
+                        
                     </b-form-group>
 
                     <b-form-group  v-if="modo==='save'" label="Categoria:" label-for="article-category">
@@ -50,13 +61,18 @@ import {VueEditor} from 'vue2-editor'
 import axios from 'axios'
 import {apiUrl, mostraErro} from '@/global'
 
+import VueUploadMultipleImage from 'vue-upload-multiple-image'
+
+
 export default {
     name:"ArticleAdmin",
-    components:{VueEditor},
+    components:{VueEditor,VueUploadMultipleImage},
     data:function(){
         return{
+            images: [],
             modo:'save',
             artigo:{},
+            data:"",
             artigos:[],
             categorias:[],
             usuarios:[],
@@ -73,6 +89,27 @@ export default {
         }
     },
     methods:{
+        uploadImageSuccess(formData, index, fileList) {
+            //axios.post('http://localhost:3000/enviar', fileList[0].path)
+            let salva = localStorage.setItem('url', fileList[0].path)
+            this.data = fileList[0].path
+
+      
+    },
+    beforeRemove (index, done, fileList) {
+      console.log('index', index, fileList)
+      var r = confirm("remove image")
+      if (r == true) {
+        done()
+      } else {
+      }
+    },
+    editImage (formData, index, fileList) {
+      console.log('edit data', formData, index, fileList)
+    },
+    dataChange (data) {
+      console.log(data)
+    },
         getArtigos(){
             const url = `${apiUrl}/artigo?page=${this.page}`
             axios.get(url).then(resp => {
@@ -106,6 +143,8 @@ export default {
         save(){
             const metodo = this.artigo.id ? "put" : "post"
             const id = this.artigo.id ? `${this.artigo.id}` : ''
+            console.log(this.data)
+            this.artigo.imageUrl =  this.data
 
             axios[metodo](`${apiUrl}/artigo/${id}`, this.artigo)
                 .then(()=>{

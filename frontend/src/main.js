@@ -16,6 +16,10 @@ import   './config/sessaoExpirada'
 
 import './config/mq'
 
+import VueLazyload from 'vue-lazyload'
+ 
+Vue.use(VueLazyload)
+
 Vue.config.productionTip = false
 
 //conifgura axio para pegar token 

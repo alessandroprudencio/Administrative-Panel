@@ -49,7 +49,6 @@
                     <b-button variant="danger" @click="carregaUser(data.item, 'remove')"><i class="fa fa-trash"></i> </b-button>   
                 </template>
             </b-table>
-        <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit"></b-pagination>
 
     </div>
 </template>
@@ -65,9 +64,9 @@ export default {
             modo:'save',
             user:{},
             users:[],
-            page:1,
-            count:0,
-            limit:0,
+           // page:1,
+            //count:0,
+           // limit:0,
             fields:[
                 //{   key: 'id', label:'Código', sortable:true},
                 {   key: 'name', label:'Nome', sortable:true},
@@ -80,12 +79,9 @@ export default {
     },
     methods:{
         getUsuarios(){
-            const url = `${apiUrl}/users?page=${this.page}`
+            const url = `${apiUrl}/users`
             axios.get(url).then(resp => {
-                this.users = resp.data.data 
-                this.limit = resp.data.limit   
-                this.count = resp.data.count 
-               
+                this.users = resp.data   
             })
         },
         cancelar(){
