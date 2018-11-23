@@ -57,7 +57,7 @@ module.exports = app =>{
         const count = parseInt(result.count)
 
         app.db({a:'articles',u:'users'})
-            .select('a.id','a.name', 'a.description', {autor:'u.name'})
+            .select('a.id','a.name','a.imageUrl', 'a.description', {autor:'u.name'})
             .limit(limit)
             .offset(page * limit - limit)
             .whereRaw('?? = ??', ['u.id', 'a.userId']) //ENCONTRA QUEM POSTO SE NÃO COLOCAR FICA LOOP

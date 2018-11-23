@@ -15,15 +15,16 @@
                         <vue-upload-multiple-image
                         @upload-success="uploadImageSuccess"
                         @before-remove="beforeRemove"
-                        @edit-image="editImage"
-                        @data-change="dataChange"
-                        :data-images="images"
                         v-model="artigo.imageUrl"
                         :readonly="modo==='remove'" 
                         id="article-imagem" class="mb-3" 
-                        placeholder="Informe a URL da Imagem"
-                        ></vue-upload-multiple-image>
-                        
+                        dragText="Arraste a imagen"
+                        browseText="(ou) Selecione"
+                        :primaryText="nomeImg"
+                        :multiple="false"
+                        popupText="Formatos aceitos > /gif/jpeg/png/bmp/jpg"
+                        accept="image/gif,image/jpeg,image/png,image/bmp,image/jpg"
+                        ></vue-upload-multiple-image>  
                     </b-form-group>
 
                     <b-form-group  v-if="modo==='save'" label="Categoria:" label-for="article-category">
@@ -65,11 +66,11 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
 
 
 export default {
-    name:"ArticleAdmin",
+    name:"AdminArticle",
     components:{VueEditor,VueUploadMultipleImage},
     data:function(){
         return{
-            images: [],
+            nomeImg:'',
             modo:'save',
             artigo:{},
             data:"",
@@ -89,27 +90,25 @@ export default {
         }
     },
     methods:{
-        uploadImageSuccess(formData, index, fileList) {
-            //axios.post('http://localhost:3000/enviar', fileList[0].path)
-            let salva = localStorage.setItem('url', fileList[0].path)
-            this.data = fileList[0].path
+            uploadImageSuccess(formData, index, fileList) {    
+                this.nomeImg = fileList[0].name
+                this.data = fileList[0].path  
+                //console.log(fileList[0].path)
+            },
+            beforeRemove (index, done, fileList) {
+                return done()
+            },
+            //  editImage (index, fileList, formData) {
+            //     console.log('EDITAR', 'form data:' , formData,'index:', index,'filelist',  fileList)
+            //     this.nomeImg= formData[0].name
 
-      
-    },
-    beforeRemove (index, done, fileList) {
-      console.log('index', index, fileList)
-      var r = confirm("remove image")
-      if (r == true) {
-        done()
-      } else {
-      }
-    },
-    editImage (formData, index, fileList) {
-      console.log('edit data', formData, index, fileList)
-    },
-    dataChange (data) {
-      console.log(data)
-    },
+            //      console.log(formData[0].name)
+                
+            //     this.nomeImg= formData[0].name
+
+            // },
+    
+
         getArtigos(){
             const url = `${apiUrl}/artigo?page=${this.page}`
             axios.get(url).then(resp => {
@@ -136,14 +135,11 @@ export default {
         },
          cancelar(){
             this.modo = 'save'
-            this.artigo = {}
-            this.getArtigos()
+            this.$router.push({name:'Auth'})
         },
-       
         save(){
             const metodo = this.artigo.id ? "put" : "post"
             const id = this.artigo.id ? `${this.artigo.id}` : ''
-            console.log(this.data)
             this.artigo.imageUrl =  this.data
 
             axios[metodo](`${apiUrl}/artigo/${id}`, this.artigo)
@@ -156,7 +152,7 @@ export default {
             this.modo = modo
             //this.artigo = {...artigo}
              axios.get(`${apiUrl}/artigo/${artigo.id}`)
-                   .then(res => this.artigo = res.data)                  
+                   .then(res => this.artigo = res.data)    
         },
          remove(){
             const id = this.artigo.id
@@ -181,6 +177,9 @@ export default {
 </script>
 
 <style>
+    .image-icon-edit{
+        display: none;
+    }
     .tamanhoDescricao{
         width: 48%;
     }
@@ -194,5 +193,8 @@ export default {
         vertical-align:0;
         padding: 1px;
         padding-left:1% ;
+    }
+    .table{
+        padding-bottom: 10px;
     }
 </style>
