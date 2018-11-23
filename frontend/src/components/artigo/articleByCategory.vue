@@ -26,7 +26,7 @@ export default {
             categoria:{},
             artigos:[],
             page:1,
-            carregarMais:true
+            carregarMais:false
         }
     },
     methods:{
@@ -39,8 +39,11 @@ export default {
             axios(url).then(res => {
                 this.artigos = this.artigos.concat(res.data)
                 this.page++
-
-                if(res.data.lenght === 0 ) this.carregarMais = false
+                if(res.data == 0 ){
+ this.carregarMais = false
+                }else{
+ this.carregarMais = true
+                }
             })
         }
     },

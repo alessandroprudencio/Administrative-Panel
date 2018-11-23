@@ -11,13 +11,14 @@
                         <b-form-input  :readonly="modo==='remove'" id="article-description" class="mb-3" v-model="artigo.description" placeholder="Insira uma descrição do Artigo"/>
                     </b-form-group>
 
-                    <b-form-group  v-if="modo==='save'" label="Imagem (URL)" label-for="article-imagem">
+                    <b-form-group id="formImg" v-if="modo==='save'" label="Imagem (URL)" label-for="article-imagem">
                         <vue-upload-multiple-image
+                        v-if="editar=='nao'"
                         @upload-success="uploadImageSuccess"
                         @before-remove="beforeRemove"
                         v-model="artigo.imageUrl"
                         :readonly="modo==='remove'" 
-                        id="article-imagem" class="mb-3" 
+                        id="article-imagem"
                         dragText="Arraste a imagen"
                         browseText="(ou) Selecione"
                         :primaryText="nomeImg"
@@ -25,7 +26,14 @@
                         popupText="Formatos aceitos > /gif/jpeg/png/bmp/jpg"
                         accept="image/gif,image/jpeg,image/png,image/bmp,image/jpg"
                         ></vue-upload-multiple-image>  
+
+                        <div v-else id="areaImg">
+                        <img  id="img" width="188" height="178" :src="artigo.imageUrl"/>
+                        </div>
+                          <i  v-if="editar!='nao'" id='iconLixeira' class="fa fa-trash" aria-hidden="true" @click="cancelar"/>
                     </b-form-group>
+
+                  
 
                     <b-form-group  v-if="modo==='save'" label="Categoria:" label-for="article-category">
                         <b-form-select :readonly="modo==='remove'" id="article-category" class="mb-3" :options="categorias" v-model="artigo.categoryId"/>
@@ -72,6 +80,7 @@ export default {
         return{
             nomeImg:'',
             modo:'save',
+            editar:'nao',
             artigo:{},
             data:"",
             artigos:[],
@@ -133,9 +142,11 @@ export default {
                 })
             })
         },
-         cancelar(){
+         cancelar(index, done, fileList){
             this.modo = 'save'
-            this.$router.push({name:'Auth'})
+            this.artigo = {}
+            this.getArtigos()
+            this.editar = 'nao'
         },
         save(){
             const metodo = this.artigo.id ? "put" : "post"
@@ -149,6 +160,7 @@ export default {
                 }).catch(mostraErro)
         },
          carregaArtigo(artigo, modo= 'save'){
+             this.editar = 'sim'
             this.modo = modo
             //this.artigo = {...artigo}
              axios.get(`${apiUrl}/artigo/${artigo.id}`)
@@ -177,6 +189,11 @@ export default {
 </script>
 
 <style>
+   #iconLixeira{
+       cursor: pointer;
+       margin-top:-60%; 
+        margin-left: 35%;
+    }
     .image-icon-edit{
         display: none;
     }
