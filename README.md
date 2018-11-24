@@ -9,6 +9,7 @@ Languages and frameworks used:
     
   -> FRONTEND 
     ->VUE JS 
+    ->BOOTSTRAP V4
     
   -> DATABASE
     -> MONGO DB - BIBLIOTECA NODEJS => MONGOOSE 
