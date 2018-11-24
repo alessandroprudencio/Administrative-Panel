@@ -12,6 +12,7 @@ Languages and frameworks used:
     
   -> DATABASE
     -> MONGO DB - BIBLIOTECA NODEJS MONGOOSE 
+    
     -> POSTGRE SQL - BIBLIOTECA NODEJS KNEX 
     
   
