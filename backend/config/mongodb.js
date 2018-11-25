@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/estatistica', {useNewUrlParser: true})
+mongoose.connect('mongodb://alessandropcs:hitman789@ds253243.mlab.com:53243/estatistica', {useNewUrlParser: true})
 .then(msg => {
     msg = "Conectado com sucesso ao banco!"
     console.log(msg)
