@@ -30,10 +30,10 @@ export default new Vuex.Store({
             //if se tiver usuario, seta o token no cabeçalho
             if(user) {
                 axios.defaults.headers.common['Authorization'] =  `Bearer ${user.token}`
-                state.isMenuVisible = true
+                state.isMenuVisible = false
             }else{
                 delete axios.defaults.headers.common['Authorization']
-                state.isMenuVisible = false
+                state.isMenuVisible = true
             }
 
         }
