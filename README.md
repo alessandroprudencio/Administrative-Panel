@@ -1,4 +1,4 @@
-# Sistema-Administrativo
+# Administrative-Panel
 
 Languages and frameworks used:
 
